@@ -9,7 +9,13 @@ keys({a: 1, b: 2, c: 3});
 //
 // [3 points] Write keys() without using Object.keys() from ES5.
 //-------------------------------------------------------------------------------------------------
-
+function keys (object) {
+    const keysArray = [];
+    for (var key in object) {
+        keysArray.push(key);
+    }
+    return console.log(keysArray);
+}
 
 
 // (2) --------------------------------------------------------------------------------------------
@@ -29,7 +35,11 @@ each(['a', 'b', 'c'], function(value, i, array) {
 //
 // [3 points] Write each() using a for loop.
 //-------------------------------------------------------------------------------------------------
-
+function each(array, callback) {
+    for (var i = 0; i < array.length; i++) {
+        callback(array[i], i, array);
+    }
+}
 
 
 // (3) --------------------------------------------------------------------------------------------
@@ -56,7 +66,7 @@ var sum = function(numbers) {
     };
 
 // The call:
-
+console.log('Begin Reduce');
 sum([7, 12, 8]);
 
 // will return 27 and log to the console:
@@ -69,6 +79,15 @@ sum([7, 12, 8]);
 // [+1 point] Use each() in your implementation.
 //-------------------------------------------------------------------------------------------------
 
+// Without using each()
+function reduce(array, callback, accumulator) {
+    var calc = accumulator;
+    for (var i = 0; i < array.length; i++) {
+        calc = callback(calc, array[i], i, array);
+    }
+    console.log(calc);
+    return calc;
+}
 
 
 // (4) --------------------------------------------------------------------------------------------
@@ -95,6 +114,10 @@ filter([7, 13, 8, 11, 12, 16], function(value, i, array) {
 // [3 points] Write filter().
 // [+1 point] Use reduce() in your implementation.
 //-------------------------------------------------------------------------------------------------
+// placeholder function to prevent output errors
+function filter () {
+    return;
+}
 
 
 
@@ -120,3 +143,6 @@ extend(
 // [+1 point] Use keys() in your implementation.
 // [+2 points] Use nested calls to reduce() in your implementation.
 //-------------------------------------------------------------------------------------------------
+function extend() {
+    return;
+}
