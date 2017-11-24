@@ -96,7 +96,7 @@ function reduce(array, callback, accumulator) {
 // values for which the predicate returns a truthy value should be copied into the new array. The
 // predicate function should also be passed the iteration variable and a reference to the array,
 // similar to the other iteration utilities. For example:
-
+console.log('Begin Filter');
 filter([7, 13, 8, 11, 12, 16], function(value, i, array) {
     console.log(value, i);
     return value % 2 === 0;
@@ -115,8 +115,13 @@ filter([7, 13, 8, 11, 12, 16], function(value, i, array) {
 // [+1 point] Use reduce() in your implementation.
 //-------------------------------------------------------------------------------------------------
 // placeholder function to prevent output errors
-function filter () {
-    return;
+function filter (array, callback) {
+    var filteredArray = []
+    for (var i = 0; i < array.length; i++) {
+        callback(array[i], i, array) ? filteredArray.push(array[i]) : '';
+    }
+    console.log(filteredArray);
+    return filteredArray;
 }
 
 
@@ -143,6 +148,6 @@ extend(
 // [+1 point] Use keys() in your implementation.
 // [+2 points] Use nested calls to reduce() in your implementation.
 //-------------------------------------------------------------------------------------------------
-function extend() {
+function extend(data) {
     return;
 }
