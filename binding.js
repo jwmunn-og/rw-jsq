@@ -103,7 +103,6 @@ var lower = function(string) {
 var callLower = function(value) {
     return String.prototype.toLowerCase.call(value);
 }
-console.log(callLower('HEYYaLl What UP dudE'));
 
 
 // (4) --------------------------------------------------------------------------------------------
@@ -114,8 +113,11 @@ console.log(callLower('HEYYaLl What UP dudE'));
 // [3 points] Write slice() using the .apply() method of Array.prototype.slice. Hint: you can get
 // the optional start and end index arguments by calling Array.prototype.slice.call(arguments, 1).
 //-------------------------------------------------------------------------------------------------
-function slicer(arguments) {
-    console.log(Array.prototype.slice.call(arguments, 1));
+var slicer = function (arguments) {
+    return (
+        function() {
+            return Array.prototype.slice.call(arguments, 1);
+        });
 }
 var animals = ['ant', 'bison', 'camel', 'duck', 'elephant'];
 console.log(animals.slicer(2));

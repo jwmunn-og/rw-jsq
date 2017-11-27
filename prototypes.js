@@ -20,9 +20,6 @@ Human.prototype.name = function() {
 Human.prototype.greeting = function() {
     return 'Hi ' + this.name();
 }
-// Test method output
-var justin = new Human('Justin', 'Munn');
-console.log(justin.greeting());
 
 // (2) --------------------------------------------------------------------------------------------
 // create() is a simplified version of ES5's Object.create(). It accepts a prototype object from
@@ -94,9 +91,10 @@ var Human = (
 // [+1 point] Use create() in your implementation.
 // [+1 point] Use extend() from iteration.js in your implementation.
 //-------------------------------------------------------------------------------------------------
-function declare (proto, callbackOne, constructorTwo) {
-    console.log('Invoking declare()');
-    console.log(callbackOne.toString);
+// Failed attempt:
+// function declare (proto, callbackOne, constructorTwo) {
+//     console.log('Invoking declare()');
+//     console.log(callbackOne.toString);
 
     // callbackOne (gender, first, last) {
     //     var newHuman = new proto(gender);
@@ -117,8 +115,3 @@ function declare (proto, callbackOne, constructorTwo) {
 // calling Human's .greeting() method and modifying its result with a longer string.
 // [+1 point] Use declare() in your solution.
 //-------------------------------------------------------------------------------------------------
-Animal.prototype.ChattyHuman = function() {
-
-}
-
-var ChattyHuman = Object.create(Human);
