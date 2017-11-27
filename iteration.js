@@ -14,7 +14,8 @@ function keys (object) {
     for (var key in object) {
         keysArray.push(key);
     }
-    return console.log(keysArray);
+
+    return keysArray;
 }
 
 
@@ -66,7 +67,6 @@ var sum = function(numbers) {
     };
 
 // The call:
-console.log('Begin Reduce');
 sum([7, 12, 8]);
 
 // will return 27 and log to the console:
@@ -78,17 +78,15 @@ sum([7, 12, 8]);
 // [3 points] Write reduce().
 // [+1 point] Use each() in your implementation.
 //-------------------------------------------------------------------------------------------------
-
-// Without using each()
 function reduce(array, callback, accumulator) {
     var calc = accumulator;
+
     for (var i = 0; i < array.length; i++) {
         calc = callback(calc, array[i], i, array);
     }
-    console.log(calc);
+
     return calc;
 }
-
 
 // (4) --------------------------------------------------------------------------------------------
 // filter() is a utility that accepts an array and a predicate function to call for each value in
@@ -96,7 +94,6 @@ function reduce(array, callback, accumulator) {
 // values for which the predicate returns a truthy value should be copied into the new array. The
 // predicate function should also be passed the iteration variable and a reference to the array,
 // similar to the other iteration utilities. For example:
-console.log('Begin Filter');
 filter([7, 13, 8, 11, 12, 16], function(value, i, array) {
     console.log(value, i);
     return value % 2 === 0;
@@ -116,11 +113,12 @@ filter([7, 13, 8, 11, 12, 16], function(value, i, array) {
 //-------------------------------------------------------------------------------------------------
 // placeholder function to prevent output errors
 function filter (array, callback) {
-    var filteredArray = []
+    var filteredArray = [];
+
     for (var i = 0; i < array.length; i++) {
         callback(array[i], i, array) ? filteredArray.push(array[i]) : '';
     }
-    console.log(filteredArray);
+
     return filteredArray;
 }
 
@@ -149,5 +147,17 @@ extend(
 // [+2 points] Use nested calls to reduce() in your implementation.
 //-------------------------------------------------------------------------------------------------
 function extend(data) {
-    return;
+    var first = data;
+    var rest = Array.prototype.slice.call(arguments, 1);
+
+    for (var i = 0; i < rest.length; i++) {
+        var theKeys = keys(rest[i]);
+
+        for (var j = 0; j < theKeys.length; j++) {
+            var subKey = theKeys[j];
+            data[subKey] = rest[i][subKey];
+        }
+    }
+
+    return first;
 }
