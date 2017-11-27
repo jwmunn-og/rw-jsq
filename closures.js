@@ -13,19 +13,31 @@
 // string primitive:
 
 var isString = function(value) {
-        return Object.prototype.toString.call(value) === '[object String]';
-    };
+  return Object.prototype.toString.call(value) === "[object String]";
+};
 
 // typeTest() is a utility that generates type-testing predicate functions like isString():
 
-var isString = typeTest('String'),
-    isRegExp = typeTest('RegExp'),
-    // ...
+var isString = typeTest("String"),
+  isRegExp = typeTest("RegExp");
+// ...
 
 // [3 points] Write typeTest().
 //-------------------------------------------------------------------------------------------------
+function typeTest(typeToCheck) {
+  function compareValue(value) {
+    return Object.prototype.toString.call(value) === "[object " + typeToCheck + "]";;
+  }
+  return compareValue;
+}
 
-
+// Spec Tests
+// var regExp = new RegExp("ab+c", "i"),
+// str    = "Hello, World!";
+// console.log(regExp.toString(), isRegExp(regExp));
+// console.log(regExp.toString(), isString(regExp));
+// console.log(str.toString(), isString(str));
+// console.log(str.toString(), isRegExp(str));
 
 // (2) --------------------------------------------------------------------------------------------
 // complement() is a utility that accepts a predicate function (a function that returns true or
@@ -36,17 +48,21 @@ var isString = typeTest('String'),
 // [3 points] Write complement().
 // [+1 point] Use apply() from binding.js in your implementation.
 //-------------------------------------------------------------------------------------------------
-
+function complement (predicateFn) {
+    return function () {
+        return !predicateFn.apply(this, arguments);
+    };
+}
 
 
 // (3) --------------------------------------------------------------------------------------------
 // A closure can easily capture a constant value for later retrieval, e.g.:
 
 var constant = function(value) {
-        return function() {
-            return value;
-        };
-    };
+  return function() {
+    return value;
+  };
+};
 
 // To push this concept further, imagine a similar function single() that returns a function,
 // which in turn accepts another function. When the returned function is invoked, it will pass the
@@ -54,15 +70,17 @@ var constant = function(value) {
 
 var retrieve = single(25);
 retrieve(function(value) {
-    return value;
+  return value;
 });
+
 
 // Here, the call to retrieve() will return 25.
 //
 // [3 points] Write single().
 //-------------------------------------------------------------------------------------------------
-
-
+function single(value) {
+    return (function() { return value; });
+}
 
 // (4) --------------------------------------------------------------------------------------------
 // pair() is a function that is similar to single(), except that it captures two arguments for
@@ -80,15 +98,29 @@ rest(point) === 91;
 // [1 point] Write first().
 // [1 point] Write rest().
 //-------------------------------------------------------------------------------------------------
+function pair(a, b) {
+    return function() {
+        return [a, b]
+    };
+}
 
+function first(callback) {
+    var array = callback();
+    return array[0];
+}
 
+function rest(callback) {
+    var array = callback();
+    return array[1];
+}
 
 // (5) --------------------------------------------------------------------------------------------
 // The data structure created by pair() can be used to represent cells in a singly-linked
 // list. list() is a utility that accepts an arbitrary number of arguments and creates a
 // null-terminated, singly-linked list of pairs containing the values:
 
-list(1, 2, 3, 4);
+var listResult = list(1, 2, 3, 4);
+console.log(listResult);
 
 // is equivalent to:
 
@@ -98,9 +130,32 @@ pair(1, pair(2, pair(3, pair(4, null))));
 // [+1 point] Use reduce() from iteration.js in your implementation.
 //-------------------------------------------------------------------------------------------------
 
+function list() {
+    var args = Array.prototype.slice.call(arguments);
+    var result;
 
+    function next() {
+        console.log('args set to: ' + args);
+        var currentNode = args.shift();
+        console.log('currentNode: ' + currentNode);
+
+        if (args.length < 1) {
+            result = pair(currentNode, null);
+            console.log(`pair(${currentNode}, null)`);
+            return result;
+        } else {
+            console.log(`pair(${currentNode}, next.apply(undefined, ${args}))`);
+            pair(currentNode, next.apply(undefined, args));
+        }
+    }
+    next();
+
+    console.log(result);
+    return result;
+}
 
 // (6) -------------------------------------------------------------------------------------------
 // [1 point] What are the three functions pair(), first() and rest() traditionally called in the
 // Lisp family of languages?
 //-------------------------------------------------------------------------------------------------
+// In Lisp pair() is called cons, first() is called  car, and rest() is called cdr

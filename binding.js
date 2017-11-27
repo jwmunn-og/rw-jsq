@@ -7,53 +7,53 @@
 //
 // JavaScript has three different syntactical forms for invoking functions:
 
-fn(1, 2, 3);
-obj.fn(1, 2, 3);
-obj['fn'](1, 2, 3);
+// fn(1, 2, 3);
+// obj.fn(1, 2, 3);
+// obj['fn'](1, 2, 3);
 
-// The first is the most basic and simply invokes a function without a this context, passing
-// the three arguments 1, 2 and 3. The latter two are more complicated, but they are behaviorally
-// equivalent. They invoke the function fn(), which is stored as a property of obj, setting obj as
-// the this context and passing the three arguments 1, 2 and 3.
-//
-// These three syntaxes are unified by a function's .call() method. Its first argument is the
-// this context to set up for the function call. Any additional arguments are passed through to the
-// function. Using .call(), the above example may be rewritten:
+// // The first is the most basic and simply invokes a function without a this context, passing
+// // the three arguments 1, 2 and 3. The latter two are more complicated, but they are behaviorally
+// // equivalent. They invoke the function fn(), which is stored as a property of obj, setting obj as
+// // the this context and passing the three arguments 1, 2 and 3.
+// //
+// // These three syntaxes are unified by a function's .call() method. Its first argument is the
+// // this context to set up for the function call. Any additional arguments are passed through to the
+// // function. Using .call(), the above example may be rewritten:
 
-fn.call(null, 1, 2, 3);
-obj.fn.call(obj, 1, 2, 3);
-obj['fn'].call(obj, 1, 2, 3);
+// fn.call(null, 1, 2, 3);
+// obj.fn.call(obj, 1, 2, 3);
+// obj['fn'].call(obj, 1, 2, 3);
 
-// Additionally, functions have a .apply() method that can be used to pass a this context value and
-// an arbitrary number of arguments as an array:
+// // Additionally, functions have a .apply() method that can be used to pass a this context value and
+// // an arbitrary number of arguments as an array:
 
-fn.apply(null, [1, 2, 3]);
-obj.fn.apply(obj, [1, 2, 3]);
-obj['fn'].apply(obj, [1, 2, 3]);
+// fn.apply(null, [1, 2, 3]);
+// obj.fn.apply(obj, [1, 2, 3]);
+// obj['fn'].apply(obj, [1, 2, 3]);
 
-// Assume we have a utility named bind() that we pass a function and a this context value. It
-// returns a new function with the original function permanently bound to the this context. For
-// instance, we could write the second example as:
+// // Assume we have a utility named bind() that we pass a function and a this context value. It
+// // returns a new function with the original function permanently bound to the this context. For
+// // instance, we could write the second example as:
 
-bind(obj.fn, obj)(1, 2, 3);
+// bind(obj.fn, obj)(1, 2, 3);
 
-// Note that bind() is similar to functions' .bind() method from ES5. A function created by bind()
-// will ignore any this context value passed to its .call() or .apply() methods. For example, in:
+// // Note that bind() is similar to functions' .bind() method from ES5. A function created by bind()
+// // will ignore any this context value passed to its .call() or .apply() methods. For example, in:
 
-bind(obj.fn, obj).call(other, 4, 5, 6);
+// bind(obj.fn, obj).call(other, 4, 5, 6);
 
-// the this context in the function returned by bind() will still be obj, not other.
-//
-// For the following function:
+// // the this context in the function returned by bind() will still be obj, not other.
+// //
+// // For the following function:
 
-var fn = function() {
-        console.log(this.greeting + ', world!');
-    };
+// var fn = function() {
+//         console.log(this.greeting + ', world!');
+//     };
 
-// [2 points] Write a code snippet that invokes fn so that it logs 'Hello, World!' to the console.
-// [+1 point] Use bind() in your solution.
-//-------------------------------------------------------------------------------------------------
-
+// // [2 points] Write a code snippet that invokes fn so that it logs 'Hello, World!' to the console.
+// // [+1 point] Use bind() in your solution.
+// //-------------------------------------------------------------------------------------------------
+// bind(fn.greeting, fn)('Hello');
 
 
 // (2) --------------------------------------------------------------------------------------------
@@ -80,7 +80,10 @@ destructure(
 //
 // [3 points] Write destructure() using the function argument's .apply() method.
 //-------------------------------------------------------------------------------------------------
-
+function destructure(array, fn, context) {
+    this.name = context.name;
+    return fn(array[0], array[1]);
+}
 
 
 // (3) --------------------------------------------------------------------------------------------
@@ -97,7 +100,10 @@ var lower = function(string) {
 //
 // [3 points] Write a version of lower() using the .call() method of String.prototype.toLowerCase.
 //-------------------------------------------------------------------------------------------------
-
+var callLower = function(value) {
+    return String.prototype.toLowerCase.call(value);
+}
+console.log(callLower('HEYYaLl What UP dudE'));
 
 
 // (4) --------------------------------------------------------------------------------------------
@@ -108,7 +114,11 @@ var lower = function(string) {
 // [3 points] Write slice() using the .apply() method of Array.prototype.slice. Hint: you can get
 // the optional start and end index arguments by calling Array.prototype.slice.call(arguments, 1).
 //-------------------------------------------------------------------------------------------------
-
+function slicer(arguments) {
+    console.log(Array.prototype.slice.call(arguments, 1));
+}
+var animals = ['ant', 'bison', 'camel', 'duck', 'elephant'];
+console.log(animals.slicer(2));
 
 
 // (5) --------------------------------------------------------------------------------------------
@@ -128,7 +138,10 @@ apply(
 //
 // [3 points] Write apply() using the .call() method of Function.prototype.apply.
 //-------------------------------------------------------------------------------------------------
-
+var apply = function(data, arguments) {
+    this.value = data.value
+    return Function.prototype.apply.call(data, arguments);
+}
 
 
 // (6) --------------------------------------------------------------------------------------------
