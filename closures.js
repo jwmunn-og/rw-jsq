@@ -31,14 +31,6 @@ function typeTest(typeToCheck) {
   return compareValue;
 }
 
-// Spec Tests
-// var regExp = new RegExp("ab+c", "i"),
-// str    = "Hello, World!";
-// console.log(regExp.toString(), isRegExp(regExp));
-// console.log(regExp.toString(), isString(regExp));
-// console.log(str.toString(), isString(str));
-// console.log(str.toString(), isRegExp(str));
-
 // (2) --------------------------------------------------------------------------------------------
 // complement() is a utility that accepts a predicate function (a function that returns true or
 // false) and returns a new function that invokes the predicate function, returning its boolean
@@ -69,6 +61,8 @@ var constant = function(value) {
 // function that you pass it the constant value:
 
 var retrieve = single(25);
+
+console.log(retrieve);
 retrieve(function(value) {
   return value;
 });
@@ -135,22 +129,17 @@ function list() {
     var result;
 
     function next() {
-        console.log('args set to: ' + args);
         var currentNode = args.shift();
-        console.log('currentNode: ' + currentNode);
 
         if (args.length < 1) {
             result = pair(currentNode, null);
-            console.log(`pair(${currentNode}, null)`);
             return result;
         } else {
-            console.log(`pair(${currentNode}, next.apply(undefined, ${args}))`);
             pair(currentNode, next.apply(undefined, args));
         }
     }
     next();
 
-    console.log(result);
     return result;
 }
 
